@@ -21,6 +21,6 @@ if [ $# = 3 ]; then
 else
 	echo "Fixes the database encoding by converting from latin to utf8"
 	echo "Usage: `basename $0` <host> <user> <database>"
-	echo "eg. `basename $0` 192.168.103.11 fcc_uat fcc_uat"
+	echo "eg. `basename $0` 127.0.0.1 username my_database"
 fi
 
