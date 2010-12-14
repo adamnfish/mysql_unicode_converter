@@ -1,1 +1,21 @@
 Converts a mysql database from latin encoding to unicode (utf8)
+
+## What?
+
+mysql_unicode_converter is a shell script (bash) that converts a MySQL database from latin encoding to utf8.
+
+## Why?
+
+By default, MySQL uses a latin encoding but Django assumes that you are using utf8! Obviously, this means that Django is sending unicode data to MySQL but MySQL isn't setup to deal with it which can (and does) lead to corruption of data.
+
+If you have an project setup and running (perhaps in production ) and have only just realised the error of your initial ways, this script exists to save the day.
+
+## How?
+
+Running this script will dump your database, create a backup copy and then do a find and replace on the dump that swaps the "DEFAULT CHARSET=latin1" directives for "DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci". Now, when the tables are recreated, they wil be created correctly. It also drops the database and re-creates it specifying utf8 as the default character set. It will then load the tweaked database dump back in. The whole process should only take a couple of seconds (depending on the size of the database, of course) and when it is finished your database has been converted!
+
+Running the script is very simple - run it with no arguments to see instructions. Your server will need access to the database, but presumably it has that already!
+
+## Issues
+
+This script will not 'recover' any existing data. If you have had unicode submissions made already, they will remain corrupted. However, any new submissions after the script is run will be captured correctly.
